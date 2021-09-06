@@ -2,7 +2,7 @@
 
 KeycloadなどのOIDC対応のIdPと連携してログインし、トークンを取得するサンプルアプリのFlutterのサンプルコードです。
 
-[OpenID Foundation](https://openid.net/) がGithub上に開発している [OpenIDリポジトリ](https://github.com/openid) にある [Android版AppAuth](https://github.com/openid/AppAuth-Android) と [iOS版AppAuth](https://github.com/openid/AppAuth-iOS) をベースに開発された [Flutter版AppAuth](https://github.com/MaikuB/flutter_appauth) である [flutter_appauthプラグイン](https://pub.dev/packages/flutter_appauth) を利用してそれなりの品質のアプリを低コストで実装しています。
+[OpenID Foundation](https://openid.net/) のオフィシャルGithubサイト [OpenID](https://github.com/openid) にある [Android版AppAuth](https://github.com/openid/AppAuth-Android) と [iOS版AppAuth](https://github.com/openid/AppAuth-iOS) をベースに開発された [Flutter版AppAuth](https://github.com/MaikuB/flutter_appauth) である [flutter_appauthプラグイン](https://pub.dev/packages/flutter_appauth) を利用して、それなりの品質 & 低コストで開発することが可能です。
 
 ## 前提条件
 1. インターネット経由でアクセス可能な管理者権限をもったKeycloakの環境が用意されていること(参考: https://www.keycloak.org/docs/latest/server_installation/)
@@ -19,7 +19,7 @@ KeycloadなどのOIDC対応のIdPと連携してログインし、トークン�
 
 - クライアント名(CLIENT_NAME)とクライアントシークレット(CLIENT_SECRET)
 - ディスカバリURL(DISCOVERY_URL): https://[Keycloakへのアドレス]/auth/realms/apilabeyes/.well-known/openid-configuration の形式になります。
-- リダイレクトURL(REDIRECT_URL): カスタムスキーマといい、ネイティブアプリがWebViewを開いて処理が終わったらWebViewをクローズしてネイティブアプリに操作を戻すトリガーに使います。"[何らかの文字列]://callback"という形式をとり、ここでは"oidc://callback"としています。"://callback"部分はiOS用に設定した値でこれがないとiOSでWebViewはクロースしません。一方、Androidでは後述する「build.gradle」ファイルと「AndroidManifest.xml」ファイルにリダイレクトURLを設定しますが、"://callback"を除いた値"oidc://callback"を設定します。
+- リダイレクトURL(REDIRECT_URL): カスタムスキーマといい、ネイティブアプリがWebViewを開いて処理が終わったらWebViewをクローズしてネイティブアプリに操作を戻すトリガーに使います。"[何らかの文字列]://callback"という形式をとり、ここでは"oidc://callback"としています。"://callback"部分はiOS用に設定する値でこのような形式の文字列がないとiOSでWebViewはクローズしません。一方、Androidでは後述する「build.gradle」ファイルと「AndroidManifest.xml」ファイルにリダイレクトURLを設定しますが、"://callback"を除いた値"oidc"を設定します。
 
 3. 本リポジトリをcloneして持ってきます。
 
