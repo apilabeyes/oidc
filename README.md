@@ -1,6 +1,6 @@
 # Flutter+AppAuthプラグインを使ったOIDCログインサンプル
 
-AndroidとiOS対応のネイティブアプリをワンコードで生成し、ホットリロードに対応したFlutterをベースにKeycloadなどのOIDC対応のIdPと連携してログインし、トークンを取得するサンプルアプリです。
+KeycloadなどのOIDC対応のIdPと連携してログインし、トークンを取得するサンプルアプリのFlutterのサンプルコードです。
 
 [OpenID Foundation](https://openid.net/) がGithub上に開発している [OpenIDリポジトリ](https://github.com/openid) にある [Android版AppAuth](https://github.com/openid/AppAuth-Android) と [iOS版AppAuth](https://github.com/openid/AppAuth-iOS) をベースに開発された [Flutter版AppAuth](https://github.com/MaikuB/flutter_appauth) である [flutter_appauthプラグイン](https://pub.dev/packages/flutter_appauth) を利用して開発テスト工数削減と品質向上をしています。
 
