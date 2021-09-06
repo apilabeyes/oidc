@@ -1,0 +1,2 @@
+# oidc
+keycloakなどのOIDC対応のIdPと連携してログインが可能なFlutterアプリのサンプルです。
