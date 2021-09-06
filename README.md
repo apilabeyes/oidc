@@ -2,9 +2,9 @@
 
 KeycloadなどのOIDC対応のIdPと連携してログインし、トークンを取得するサンプルアプリのFlutterのサンプルコードです。
 
-[OpenID Foundation](https://openid.net/) がGithub上に開発している [OpenIDリポジトリ](https://github.com/openid) にある [Android版AppAuth](https://github.com/openid/AppAuth-Android) と [iOS版AppAuth](https://github.com/openid/AppAuth-iOS) をベースに開発された [Flutter版AppAuth](https://github.com/MaikuB/flutter_appauth) である [flutter_appauthプラグイン](https://pub.dev/packages/flutter_appauth) を利用してそれなりの品質のアプリを低開発コストで実装しています。
+[OpenID Foundation](https://openid.net/) がGithub上に開発している [OpenIDリポジトリ](https://github.com/openid) にある [Android版AppAuth](https://github.com/openid/AppAuth-Android) と [iOS版AppAuth](https://github.com/openid/AppAuth-iOS) をベースに開発された [Flutter版AppAuth](https://github.com/MaikuB/flutter_appauth) である [flutter_appauthプラグイン](https://pub.dev/packages/flutter_appauth) を利用してそれなりの品質のアプリを低コストで実装しています。
 
-## 前提
+## 前提条件
 1. インターネット経由でアクセス可能な管理者権限をもったKeycloakの環境が用意されていること(参考: https://www.keycloak.org/docs/latest/server_installation/)
 2. Flutterの環境がインストールされていること(参考: https://flutter.dev/docs/get-started/install)
 3. Flutterのサンプルアプリを、開発PC経由でAndroid端末及びiPhoneに対して"flutter run"コマンドでコンパイル&実行することができること(iPhoneで試す場合は当然Apple Developerのライセンス取得やXCodeの設定等が必要なのでこのあたりの操作に慣れていることが必要です)
