@@ -2,7 +2,7 @@
 
 KeycloadなどのOIDC対応のIdPと連携してログインし、トークンを取得するサンプルアプリのFlutterのサンプルコードです。
 
-[OpenID Foundation](https://openid.net/) がGithub上に開発している [OpenIDリポジトリ](https://github.com/openid) にある [Android版AppAuth](https://github.com/openid/AppAuth-Android) と [iOS版AppAuth](https://github.com/openid/AppAuth-iOS) をベースに開発された [Flutter版AppAuth](https://github.com/MaikuB/flutter_appauth) である [flutter_appauthプラグイン](https://pub.dev/packages/flutter_appauth) を利用して開発テスト工数削減と品質向上をしています。
+[OpenID Foundation](https://openid.net/) がGithub上に開発している [OpenIDリポジトリ](https://github.com/openid) にある [Android版AppAuth](https://github.com/openid/AppAuth-Android) と [iOS版AppAuth](https://github.com/openid/AppAuth-iOS) をベースに開発された [Flutter版AppAuth](https://github.com/MaikuB/flutter_appauth) である [flutter_appauthプラグイン](https://pub.dev/packages/flutter_appauth) を利用してそれなりの品質のアプリを低開発コストで実装しています。
 
 ## 前提
 1. インターネット経由でアクセス可能な管理者権限をもったKeycloakの環境が用意されていること(参考: https://www.keycloak.org/docs/latest/server_installation/)
@@ -19,7 +19,7 @@ KeycloadなどのOIDC対応のIdPと連携してログインし、トークン�
 
 - クライアント名(CLIENT_NAME)とクライアントシークレット(CLIENT_SECRET)
 - ディスカバリURL(DISCOVERY_URL): https://[Keycloakへのアドレス]/auth/realms/apilabeyes/.well-known/openid-configuration の形式になります。
-- リダイレクトURL(REDIRECT_URL): カスタムスキーマといい、ネイティブアプリがWebViewを開いて処理が終わったらWebViewをクローズしてネイティブアプリに操作を戻すトリガーに使います。"[パッケージ名]:/callback"という形式をとり、ここでは"com.example.oidc:/callback"としています。":/callback"部分はiOS用に設定した値でこれがないとiOSでWebViewはクロースしません。一方、Androidでは後述する「build.gradle」ファイルと「AndroidManifest.xml」ファイルにリダイレクトURLを設定しますが、":/callback"を除いた値"com.example.oidc"を設定します。
+- リダイレクトURL(REDIRECT_URL): カスタムスキーマといい、ネイティブアプリがWebViewを開いて処理が終わったらWebViewをクローズしてネイティブアプリに操作を戻すトリガーに使います。"[何らかの文字列]://callback"という形式をとり、ここでは"oidc://callback"としています。"://callback"部分はiOS用に設定した値でこれがないとiOSでWebViewはクロースしません。一方、Androidでは後述する「build.gradle」ファイルと「AndroidManifest.xml」ファイルにリダイレクトURLを設定しますが、"://callback"を除いた値"oidc://callback"を設定します。
 
 3. 本リポジトリをcloneして持ってきます。
 
@@ -32,25 +32,25 @@ $ git clone https://github.com/apilabeyes/oidc.git
   var CLIENT_NAME = "(クライアント名)";
   var CLIENT_SECRET = "(クライアントシークレット)";
   var DISCOVERY_URL = "(ディスカバリURL)";
-  var REDIRECT_URL = "com.example.oidc:/callback";
+  var REDIRECT_URL = "oidc://callback";
 ```
 
-5. [Android用設定] "android/app/build.gradle"ファイルに下記のカスタムスキーマが設定されていることを確認します。この場合、Androidの設定のため、":/callback"が付与されていません。
+5. [Android用設定] "android/app/build.gradle"ファイルに下記のカスタムスキーマが設定されていることを確認します。この場合、Androidの設定のため、"://callback"が付与されていません。
 ```
         manifestPlaceholders = [
-            'appAuthRedirectScheme': 'com.example.oidc'
+            'appAuthRedirectScheme': 'oidc'
         ]
 ```
 参考: https://github.com/openid/AppAuth-Android#capturing-the-authorization-redirect
 
-6. [Android用設定] "android/app/src/main/AndroidManifest.xml"ファイルに下記のカスタムスキーマが設定されていることを確認します。この場合、Androidの設定のため、":/callback"が付与されていません。
+6. [Android用設定] "android/app/src/main/AndroidManifest.xml"ファイルに下記のカスタムスキーマが設定されていることを確認します。この場合、Androidの設定のため、"://callback"が付与されていません。
 ```
         <activity android:name="net.openid.appauth.RedirectUriReceiverActivity">
           <intent-filter>
               <action android:name="android.intent.action.VIEW"/>
               <category android:name="android.intent.category.DEFAULT"/>
               <category android:name="android.intent.category.BROWSABLE"/>
-              <data android:scheme="com.example.oidc"/>
+              <data android:scheme="oidc"/>
           </intent-filter>
         </activity>
 ```
@@ -73,7 +73,7 @@ $ git clone https://github.com/apilabeyes/oidc.git
 ```
 参考: https://pub.dev/packages/flutter_appauth
 
-8. [iOS用設定] "ios/Runner/Info.plist"ファイルに下記のカスタムスキーマが設定されていることを確認します。この場合、iOSの設定のため、":/callback"が付与されています。
+8. [iOS用設定] "ios/Runner/Info.plist"ファイルに下記のカスタムスキーマが設定されていることを確認します。この場合、iOSの設定のため、"://callback"が付与されています。
 ```
     <key>CFBundleURLTypes</key>
     <array>
@@ -82,7 +82,7 @@ $ git clone https://github.com/apilabeyes/oidc.git
             <string>Editor</string>
             <key>CFBundleURLSchemes</key>
             <array>
-                <string>com.example.oidc:/callback</string>
+                <string>oidc://callback</string>
             </array>
         </dict>
     </array>
@@ -90,6 +90,7 @@ $ git clone https://github.com/apilabeyes/oidc.git
 
 9. Android端末を開発PCに認識させコンパイル&実行します。
 ```
+$ flutter build ios
 $ flutter devices
 (認識された実行環境がリストされますのでそこにAndroid端末が含まれることを確認)
 $ flutter run -d "(Android端末名)"
@@ -97,6 +98,7 @@ $ flutter run -d "(Android端末名)"
 
 10. iPhoneを開発PCに認識させコンパイル&実行します。途中、XCodeを使ってApple Developerライセンスを認識させたり、CocoaPodをインストールするといった作業が必要です。
 ```
+$ flutter build appbundle
 $ flutter devices
 (認識された実行環境がリストされますのでそこにiPhoneが含まれることを確認)
 $ flutter run -d "(iPhone名)"

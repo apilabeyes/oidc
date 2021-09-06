@@ -31,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
   var CLIENT_NAME = "";
   var CLIENT_SECRET = "";
   var DISCOVERY_URL = "";
-  var REDIRECT_URL = "com.example.oidc:/callback";
+  var REDIRECT_URL = "oidc://callback";
 
   var appAuth = FlutterAppAuth();
   String accessToken = "";

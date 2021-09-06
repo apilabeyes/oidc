@@ -48,7 +48,7 @@
             <string>Editor</string>
             <key>CFBundleURLSchemes</key>
             <array>
-                <string>com.example.oidc:/callback</string>
+                <string>oidc://callback</string>
             </array>
         </dict>
     </array>

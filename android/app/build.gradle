@@ -49,7 +49,7 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         manifestPlaceholders = [
-            'appAuthRedirectScheme': 'com.example.oidc'
+            'appAuthRedirectScheme': 'oidc'
         ]
     }
 
