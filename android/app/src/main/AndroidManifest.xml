@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.demo2">
+    package="com.example.oidc">
    <application
-        android:label="demo2"
+        android:label="oidc"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
@@ -38,7 +38,7 @@
               <action android:name="android.intent.action.VIEW"/>
               <category android:name="android.intent.category.DEFAULT"/>
               <category android:name="android.intent.category.BROWSABLE"/>
-              <data android:scheme="com.example.demo2"/>
+              <data android:scheme="com.example.oidc"/>
           </intent-filter>
         </activity>
 

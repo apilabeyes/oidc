@@ -28,11 +28,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  var CLIENT_NAME = "demoapp";
-  var CLIENT_SECRET = "9089fafc-82a9-4ced-b003-275c452f265a";
-  var DISCOVERY_URL =
-      "https://keycloak.briscola-api.com/auth/realms/apilabeyes/.well-known/openid-configuration";
-  var REDIRECT_URL = "com.example.demo2:/callback";
+  var CLIENT_NAME = "";
+  var CLIENT_SECRET = "";
+  var DISCOVERY_URL = "";
+  var REDIRECT_URL = "com.example.oidc:/callback";
 
   var appAuth = FlutterAppAuth();
   String accessToken = "";
