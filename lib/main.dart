@@ -28,9 +28,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  var CLIENT_NAME = "";
-  var CLIENT_SECRET = "";
-  var DISCOVERY_URL = "";
+  var CLIENT_NAME = "demoapp";
+  var CLIENT_SECRET = "1cf337d0-1731-48cb-a6f9-97c2e54e64a5";
+  var DISCOVERY_URL =
+      "https://keycloak.briscola-api.net/auth/realms/apilabeyes/.well-known/openid-configuration";
   var REDIRECT_URL = "oidc://callback";
 
   var appAuth = FlutterAppAuth();
@@ -48,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
               accessToken,
               style: TextStyle(
                 color: Color(0xFF000000),
-                fontSize: 9,
+                fontSize: 5,
                 fontFamily: 'NotoSerif',
                 fontWeight: FontWeight.normal,
                 decoration: TextDecoration.none,

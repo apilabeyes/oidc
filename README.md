@@ -9,7 +9,12 @@ KeycloadなどのOIDC対応のIdPと連携してログインし、トークン�
 2. Flutterの環境がインストールされていること(参考: https://flutter.dev/docs/get-started/install)
 3. Flutterのサンプルアプリを、開発PC経由でAndroid端末及びiPhoneに対して"flutter run"コマンドでコンパイル&実行することができること(iPhoneで試す場合は当然Apple Developerのライセンス取得やXCodeの設定等が必要なのでこのあたりの操作に慣れていることが必要です)
 
-## 導入手順
+## Keycloakの設定手順
+### レルムの追加方法
+1. Keycloakに管理者としてログインします。URLは通常"https://[ホスト名]/auth/"になります。
+1. レルムの
+
+## 本Flutterアプリの導入手順
 1. [Keycloakのドキュメント](https://www.keycloak.org/docs/latest/server_admin/)を参照して、レルム作成と設定、一般ユーザの作成、クライアントの作成を行います。Webから作成した一般ユーザのアカウントにOIDCログインができるようにします。レルム管理者と一般ユーザのログインURLは下記の通りです。
 
 - レルム管理者ログインURL: https://[Keycloakへのアドレス]/auth/admin/[レルム名]/console/
