@@ -7,6 +7,13 @@ void main() async {
   runApp(MyApp());
 }
 
+// IdP情報をこちらに設定してください
+const String CLIENT_NAME = "demoapp";
+const String CLIENT_SECRET = "1cf337d0-1731-48cb-a6f9-97c2e54e64a5";
+const String DISCOVERY_URL =
+    "https://keycloak.briscola-api.net/auth/realms/apilabeyes/.well-known/openid-configuration";
+const String REDIRECT_URL = "oidc://callback";
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -28,12 +35,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  var CLIENT_NAME = "demoapp";
-  var CLIENT_SECRET = "1cf337d0-1731-48cb-a6f9-97c2e54e64a5";
-  var DISCOVERY_URL =
-      "https://keycloak.briscola-api.net/auth/realms/apilabeyes/.well-known/openid-configuration";
-  var REDIRECT_URL = "oidc://callback";
-
   var appAuth = FlutterAppAuth();
   String accessToken = "";
   @override

@@ -10,34 +10,51 @@ KeycloadなどのOIDC対応のIdPと連携してログインし、トークン�
 3. Flutterのサンプルアプリを、開発PC経由でAndroid端末及びiPhoneに対して"flutter run"コマンドでコンパイル&実行することができること(iPhoneで試す場合は当然Apple Developerのライセンス取得やXCodeの設定等が必要なのでこのあたりの操作に慣れていることが必要です)
 
 ## Keycloakの設定手順
-### レルムの追加方法
-1. Keycloakに管理者としてログインします。URLは通常"https://[ホスト名]/auth/"になります。
-1. レルムの
+Keycloakにレルムを追加し、クライアントとユーザを追加します。Keycloakの設定方法の詳細は以下のオフィシャルドキュメントを参照します。
+https://www.keycloak.org/docs/latest/server_admin/
+1. Keycloakの管理コンソールに管理者としてログインします。URLは通常"https://[ホスト名]/auth/"で表示されるページから「Administration Console」に遷移するとKeycloak全体の管理コンソールに移動します。
+2. 画面左の「Select realm」メニューを開いて「Add realm」を押下し、Nameに組織を表す名前を適当に記載し、「Create」ボタンを押下します。
+3. 作成されたレルムに対して以下の設定を行います。
+- 左メニュー「Realm Settings」>「Login」タブ >「User registration」から「Verify email」までにチェックを入れて「Save」(「Email as username」のチェックを外すとemailの代わりにユーザ名でログインできるようになります)
+- 左メニュー「Realm Settings」>「Themes」タブ >「Internationalization Enabled」をオンにして、デフォルトロケールを「ja」にして「Save」
+4. レルムに管理ユーザを作成します。
+- 左メニュー「Users」> 右上「Add user」ボタンクリック >「Username」ほかを設定し「Email Verified」をオン
+- 「Credentials」タブのパスワードをセットして「Temporary」を外して「Set password」ボタンをクリック
+- 「Role Mappings」タブ >「Client Roles」に「realm-management」と入力すると「Available Roles」がリストされるのですべて「Assigned Roles」に移動し、ユーザにレルムの管理者権限を付与
+5. レルムにクライアントと一般ユーザを作成します。
+- レルムにレルム管理者としてログイン
+https://[ホスト名]/auth/admin/[レルム名]/console/
+- 左メニュー「クライアント」> 右上「作成」ボタンをクリック
+- クライアントIDに適当なクライアント名を設定して保存
+- 「有効なリダイレクトURI」に「*」を設定（※本来は正確なリダイレクトURLを指定する必要があります）
+- 「アクセスタイプ」を「Confidential」に設定
+- 「クレデンシャル」タブをクリックして、「クライアント認証」が「Client Id and Secret」になっていることを確認して、「シークレット」の文字列をあとで「クライアントシークレット」として使うのでコピー
+- 左メニュー「ユーザ」> 右上「ユーザの追加」ボタンクリック
+- 「ユーザ名」ほかを設定し「Eメールが確認済み」をオン
+- 「クリデンシャル」タブのパスワードをセットして「一時的」を外して「Set password」ボタンをクリック
+- レルムに一般ユーザとしてログインできることを確認
+https://[ホスト名]/auth/realms/[レルム名]/account
+
+※ 以上はOIDCログインを行うために必要な設定の一例です。
 
 ## 本Flutterアプリの導入手順
-1. [Keycloakのドキュメント](https://www.keycloak.org/docs/latest/server_admin/)を参照して、レルム作成と設定、一般ユーザの作成、クライアントの作成を行います。Webから作成した一般ユーザのアカウントにOIDCログインができるようにします。レルム管理者と一般ユーザのログインURLは下記の通りです。
-
-- レルム管理者ログインURL: https://[Keycloakへのアドレス]/auth/admin/[レルム名]/console/
-- 一般ユーザログインURL: https://[Keycloakへのアドレス]/auth/realms/[レルム名]/account
-
-2. FlutterのAppAuthに設定する値をKeycloakにあわせて取得します。あとで使うのでどこかにメモしておきましょう。
-
+1. FlutterのAppAuthに設定する値を上述で作成したKeycloakのレルムから取得します。あとでプログラミングに使うのでどこかにメモしておきましょう。
 - クライアント名(CLIENT_NAME)とクライアントシークレット(CLIENT_SECRET)
 - ディスカバリURL(DISCOVERY_URL): https://[Keycloakへのアドレス]/auth/realms/apilabeyes/.well-known/openid-configuration の形式になります。
 - リダイレクトURL(REDIRECT_URL): カスタムスキーマといい、ネイティブアプリがWebViewを開いて処理が終わったらWebViewをクローズしてネイティブアプリに操作を戻すトリガーに使います。"[何らかの文字列]://callback"という形式をとり、ここでは"oidc://callback"としています。"://callback"部分はiOS用に設定する値でこのような形式の文字列がないとiOSでWebViewはクローズしません。一方、Androidでは後述する「build.gradle」ファイルと「AndroidManifest.xml」ファイルにリダイレクトURLを設定しますが、"://callback"を除いた値"oidc"を設定します。
 
 3. 本リポジトリをcloneして持ってきます。
-
 ```
 $ git clone https://github.com/apilabeyes/oidc.git
 ```
 
 4. "lib/main.dart"ファイルを開き、下記の箇所を上述2の通り編集します。
 ```
-  var CLIENT_NAME = "(クライアント名)";
-  var CLIENT_SECRET = "(クライアントシークレット)";
-  var DISCOVERY_URL = "(ディスカバリURL)";
-  var REDIRECT_URL = "oidc://callback";
+// IdP情報をこちらに設定してください
+const String CLIENT_NAME = "(クライアント名)";
+const String CLIENT_SECRET = "(クライアントシークレット)";
+const String DISCOVERY_URL = "(ディスカバリURL)";
+const String REDIRECT_URL = "oidc://callback";
 ```
 
 5. [Android用設定] "android/app/build.gradle"ファイルに下記のカスタムスキーマが設定されていることを確認します。この場合、Androidの設定のため、"://callback"が付与されていません。
