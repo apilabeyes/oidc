@@ -112,7 +112,7 @@ const String REDIRECT_URL = "oidc://callback";
 
 9. Android端末を開発PCに認識させコンパイル&実行します。
 ```
-$ flutter build ios
+$ flutter build appbundle
 $ flutter devices
 (認識された実行環境がリストされますのでそこにAndroid端末が含まれることを確認)
 $ flutter run -d "(Android端末名)"
@@ -120,7 +120,7 @@ $ flutter run -d "(Android端末名)"
 
 10. iPhoneを開発PCに認識させコンパイル&実行します。途中、XCodeを使ってApple Developerライセンスを認識させたり、CocoaPodをインストールするといった作業が必要です。
 ```
-$ flutter build appbundle
+$ flutter build ios
 $ flutter devices
 (認識された実行環境がリストされますのでそこにiPhoneが含まれることを確認)
 $ flutter run -d "(iPhone名)"
