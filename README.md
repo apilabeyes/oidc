@@ -10,11 +10,11 @@ KeycloadなどのOIDC対応のIdPと連携してログインし、トークン�
 3. Flutterのサンプルアプリを開発PC経由でAndroid端末及びiPhoneに対して"flutter run"コマンドでコンパイル&実行することができること。iPhoneで試す場合はApple Developerのライセンス取得やXCodeの設定等が必要なのでこのあたりの操作に慣れていることも必要です。
 
 ## バージョン
-Flutter: 2.5
-Flutter AppAuthプラグイン: 2.0.0-dev.3 (endSessionEndpointが追加された)
-Android OS: 11
-iOS: 14
-Keycloak: 15
+- Flutter: 2.5
+- Flutter AppAuthプラグイン: 2.0.0-dev.3 (endSessionEndpointが追加された)
+- Android OS: 11
+- iOS: 14
+- Keycloak: 15
 
 ## Keycloakの設定手順
 Keycloakにレルムを追加し、クライアントとユーザを追加します。Keycloakの設定方法の詳細は[Keycloakサーバ管理のオフィシャルドキュメント](https://www.keycloak.org/docs/latest/server_admin/)を参照します。
